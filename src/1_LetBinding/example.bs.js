@@ -2,16 +2,22 @@
 'use strict';
 
 
+/* let binding */
 var newscore = 20;
 
+/* Block Scope */
 var message = "hello world";
 
+/* Design Decisions */
 console.log("Enjoying the docs so far?");
 
-console.log("hello");
 
+/* Binding Shadowing */
+console.log("hello");
 console.log(1);
 
+
+/* Private let bindings */
 var A = {
   b: 4
 };
@@ -20,14 +26,15 @@ var A$prime = {
   b: 4
 };
 
+
+/* variable declaration */
 var greeting = "hello!";
-
 var score = 10;
-
 var displayGreeting = true;
-
 var result = 1;
 
+
+/* module export list */
 exports.greeting = greeting;
 exports.score = score;
 exports.newscore = newscore;
@@ -36,4 +43,5 @@ exports.displayGreeting = displayGreeting;
 exports.result = result;
 exports.A = A;
 exports.A$prime = A$prime;
+
 /*  Not a pure module */
