@@ -21,6 +21,7 @@ let message = {
 /* Design Decisions
  * Rescript의 if, while 및 함수는 모두 동일한 블록 스코프 메커니즘을 사용한다.
  */
+let displayGreeting = true
 if displayGreeting {
     let message = "Enjoying the docs so far?"
     Js.log(message)
@@ -54,9 +55,13 @@ if displayGreeting {
  * mutation feature : https://rescript-lang.org/docs/manual/latest/mutation
  */
  let result = 0
- let result = calculate(result)
- let result = calculateSomeMore(result)
-
+ let result = 1 + result
+ let result = 2 + result
+ // 추천하는 방법은 아니나 아래의 코드도 유효하다.
+ let result = "hello"
+ Js.log(result)
+ let result = 1
+ Js.log(result)
 
 
 
@@ -80,10 +85,9 @@ if displayGreeting {
       let a = 3
       let b = 4
   }
-
-// 기능 도입 후
-// %private 사용
-module A : {
-    %%private(let a = 3)
-    let b = 4
-}
+  // 기능 도입 후
+  // %private 사용
+  module A' = {
+      %%private(let a = 3)
+      let b = 4
+  }
