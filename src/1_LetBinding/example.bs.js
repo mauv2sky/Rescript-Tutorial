@@ -2,6 +2,7 @@
 'use strict';
 
 
+
 /* let binding */
 var newscore = 20;
 
