@@ -33,6 +33,47 @@ var meTwo = {
   }
 };
 
+var g1 = /* Hello */0;
+
+var g2 = /* Goodbye */1;
+
+var o1 = /* Good */0;
+
+var o2 = /* Error */{
+  _0: "oops!"
+};
+
+var f1 = /* Child */0;
+
+var f2 = {
+  TAG: /* Mom */0,
+  _0: 30,
+  _1: "Jane"
+};
+
+var f3 = {
+  TAG: /* Dad */1,
+  _0: 32
+};
+
+var p1 = /* Teacher */0;
+
+var p2 = /* Student */{
+  gpa: 99.5
+};
+
+var a1 = {
+  TAG: /* Warrior */0,
+  _0: {
+    score: 10.5
+  }
+};
+
+var a2 = {
+  TAG: /* Wizard */1,
+  _0: "Joe"
+};
+
 exports.areYouCrushingIt = areYouCrushingIt;
 exports.pet = pet;
 exports.pet2 = pet2;
@@ -40,4 +81,15 @@ exports.myAccount = myAccount;
 exports.friendAccount = friendAccount;
 exports.me = me;
 exports.meTwo = meTwo;
+exports.g1 = g1;
+exports.g2 = g2;
+exports.o1 = o1;
+exports.o2 = o2;
+exports.f1 = f1;
+exports.f2 = f2;
+exports.f3 = f3;
+exports.p1 = p1;
+exports.p2 = p2;
+exports.a1 = a1;
+exports.a2 = a2;
 /* No side effect */

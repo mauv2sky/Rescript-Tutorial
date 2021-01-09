@@ -57,5 +57,27 @@
     - 인자가 없는 Variant의 생성자 -> 숫자로 컴파일된다.
     - 인자가 있는 Variant의 생성자 -> TAG 필드와, 인자의 갯수만큼 차례대로 _N(0부터)의 필드를 가진다.
     - 타입선언에 단일 생성자만 포함된 인자가 있는 Variant -> TAG 필드가 없는 Object로 컴파일된다.
-    - 레이블된 Variant 인자(선언된 record타입을 inline) 
+    - 레이블된 Variant 인자(선언된 record타입을 inline)는 _N 대신 레이블 이름을 가진 객체로 컴파일된다.
+      객체에는 이전 규칙을 따라 TAG 필드가 있거나 없을 수 있다.
  */
+ type greeting = Hello | Goodbye
+ let g1 = Hello
+ let g2 = Goodbye
+
+ type outcome = Good | Error(string)
+ let o1 = Good
+ let o2 = Error("oops!")
+
+ type family = Child | Mom(int, string) | Dad(int)
+ let f1 = Child
+ let f2 = Mom(30, "Jane")
+ let f3 = Dad(32)
+
+ type person = Teacher | Student({gpa: float})
+ let p1 = Teacher
+ let p2 = Student({gpa: 99.5})
+
+ type s = {score: float}
+ type adventurer = Warrior(s) | Wizard(string)
+ let a1 = Warrior({score: 10.5})
+ let a2 = Wizard("Joe")
