@@ -81,3 +81,16 @@
  type adventurer = Warrior(s) | Wizard(string)
  let a1 = Warrior({score: 10.5})
  let a2 = Wizard("Joe")
+
+
+/* Tips & Tricks
+ * 2개의 인수를 전달하는 생성자와 단일 튜플 인수를 전달하는 생성자를 혼동하지 않도록 주의가 필요하다.
+ */
+ type account1 =
+   | Facebook(string, int)  // 2 arguments
+type account2 = 
+   | Instagram((string, int))  // 1 argument
+ 
+ // Variant는 생성자가 있어야 한다.
+ // type myType = int | string 처럼 생성자가 없는 Variant는 Rescript에서 허용하지 않으며,
+ // type myType = Int(int) | String(string)처럼 각 분기에 생성자가 필요하다.
