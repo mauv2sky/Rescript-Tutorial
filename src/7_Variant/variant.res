@@ -94,3 +94,61 @@ type account2 =
  // Variant는 생성자가 있어야 한다.
  // type myType = int | string 처럼 생성자가 없는 Variant는 Rescript에서 허용하지 않으며,
  // type myType = Int(int) | String(string)처럼 각 분기에 생성자가 필요하다.
+
+ // Variant는 Javascript와 상호운용된다.
+ // 꽤 많은 Javascript 라이브러리가 여러 타입의 인자를 허용하는 함수를 제공한다.
+ // number과 string을 인자로 받는 myLibrary 함수가 있다고 했을 때, 각 타입의 인자를 단일 바인딩된 함수로 전달하려고 할 것이다.
+ @bs.module("./myLibrary") external draw : 'a => unit = "draw"
+
+ type animal = 
+   | MyFloat(float)
+   | MyString(string)
+
+ let betterDraw = (animal) =>
+   switch animal {
+      | MyFloat(f) => draw(f)
+      | MyString(s) => draw(s)
+   }
+
+ betterDraw(MyFloat(1.5))
+ // 다른 타입의 인자를 하나의 바인딩된 함수로 전달하면 출력 코드가 혼란스러워질 수 있다.
+ // 동일한 JS 호출로 컴파일되는 두개의 external을 정의하는 것이 좋다.
+ // Rescript는 이를 위한 몇 가지 다른 방법도 제공한다.
+ // https://rescript-lang.org/docs/manual/latest/bind-to-js-function#modeling-polymorphic-function
+ @bs.module("./myLibrary") external drawFloat: float => unit = "draw"
+ @bs.module("./myLibrary") external drawString: string => unit = "draw"
+
+ // Variant 타입은 필드 이름을 통해 찾아진다.
+ // Rescript Record와 비슷하게 함수는 두 개의 Variant가 공유하는 임의의 생성자를 허용하지 않는다.
+ // 하지만 Rescript는 이를 허용하는 기능을 제공하는데, 이를 Polymorphic Variant라고 한다.
+
+
+/* Design Decision 
+ * [Polymorphic, open etc] Variant는 다른 언어에서 버그의 주요 원인인 'nullable 타입'의 필요성을 제거한다.
+ * 철학적으로 말하면, 문제는 여러가지의 가능한 조건들로부터 야기된다.
+ * 우리가 버그라고 부르는 대부분의 문제는 잘못된 조건 핸들링으로부터 발생된다.
+ * 타입 시스템은 마술처럼 버그를 제거하지 않으며, 처리되지 않은 조건을 지적하고 이를 커버하도록 요청한다.
+ * 즉, "이것 또는 저것"을 올바르게 모델링하는 능력이 중요하다.
+ * 성능 측면에서 variant는 잠재적으로 프로그램의 논리 속도를 엄청나게 높일 수 있다. JS와 Rescript의 코드를 비교해보자.
+ */
+ // Javascript 
+ %%raw(`
+   var data = 'dog'
+   if (data === 'dog') {
+      console.log('Wof');
+   } else if (data === 'cat') {
+      console.log('Meow');
+   } else if (data === 'bird') {
+      console.log('Kashiiin');
+   }
+ `)
+ // Rescript Variant
+ // type anyAnimal은 type anyAnimal = 0 | 1 | 2로 바뀌고,
+ // switch는 O(1)로 컴파일된다.
+ type anyAnimal = Dog | Cat | Bird
+ let data = Dog
+ switch data {
+    | Dog => Js.log("Wof")
+    | Cat => Js.log("Meow")
+    | Bird => Js.log("Kashiiin")
+ }
