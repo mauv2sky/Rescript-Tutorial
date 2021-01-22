@@ -141,3 +141,175 @@
  | Present => Js.log("Hey! How are you?")
  }
  // 여러 케이스가 같은 방식으로 처리된다면 논리의 특정 타입으로 정리할 수 있다.
+ 
+ // Teacher(payload)와 같은 값이 있는데 Teacher 부분에서 패턴 일치만 하고 payload는 무시하려는 경우에는
+ // 다음과 같이 _ 와일드 카드를 사용할 수 있다.
+ switch person1 {
+    | Teacher(_) => Js.log("Hi teacher")
+    | Student(_) => Js.log("Hey student")
+ }
+ // _는 switch의 최상위 수준에서도 작동하며 catch-all 조건으로 사용된다.
+ switch myStatus {
+    | Vacations(_) => Js.log("Have fun!")
+    | _ => Js.log("Ok.")
+ }
+ // 하지만 최상위 수준의 catch-all 조건을 남용하면 안된다.
+ // 대신 모든 경우를 작성하는 것을 권장한다.
+ switch myStatus {
+    | Vacations(_) => Js.log("Have fun!")
+    | Sabbatical(_) | Sick | Present => Js.log("Ok.")
+ }
+ // 일일이 작성하는 것이 번거로울 수 있지만 이는 한 번만 하면 끝나는 작업이다.
+ // 만약 Quarantined라는 Variant를 status 타입에 추가하거나, 패턴이 일치하는 위치를 변경해야 할 때 도움이 된다.
+ // 최상위 수준의 와일드 카드는 잠재적으로 버그를 일으킬 수 있기 때문에 주의해야 한다.
+
+ // 때때로 값의 형태보다 더 많은 조건을 확인하거나 임의의 검사를 실행하고 싶은 경우가 있다.
+ // 그럴 때 다음과 같이 작성하고 싶을 것이다.
+ switch person1 {
+    | Teacher(_) => ()
+    | Student({reportCard: {gpa}}) =>
+      if gpa < 0.5 {
+         Js.log("What's happening")
+      } else {
+         Js.log("Heyo")
+      }
+ }
+ // switch 패턴은 패턴을 선형으로 유지하기 위해 임의 검사 if에 대한 바로가기를 지원한다.
+ // 이 때 when 절을 이용할 수 있다.
+ switch person1 {
+    | Teacher(_) => ()
+    | Student({reportCard: {gpa}}) when gpa < 0.5 =>
+      Js.log("What's happening")
+    | Student(_) =>
+      Js.log("Heyo")
+ }
+
+ // 함수에서 예외가 발생하면, 함수의 일반적으로 반환되는 값에 추가하여 해당 예외도 일치시킬 수 있다.
+ let myItems = list{1, 2, 3}
+ let theItem = 1
+ switch List.find(i => i === theItem, myItems) {
+   | item => Js.log(item)
+   | exception Not_found => Js.log("No such item found!")
+ }
+
+ // 배열 매칭
+ let students = ["Jane", "Harvey", "patrick"]
+ switch students {
+    | [] => Js.log("There are no students")
+    | [student1] =>
+      Js.log("There's a single student here: " ++ student1)
+    | manyStudents =>
+      Js.log2("The students are: ", manyStudents)
+ }
+
+ // 리스트 매칭
+ // List의 패턴매칭은 Array와 유사하나 List의 꼬리를 추출하는 추가 기능이 있다. (첫 번째 요소를 제외한 모든 요소)
+ let rec printStudents = (students) => {
+    switch students {
+       | list{} => ()
+       | list{student} => Js.log("Last student: " ++ student)
+       | list{student1, ...otherStudents} =>
+         Js.log(student1)
+         printStudents(otherStudents)
+    }
+ }
+ printStudents(list{"Jane", "Harvey", "Patrick"})
+
+ // 주의할 점: let-binding 이름이나 기타 항목이 아닌 패턴으로만 리터럴(ex. 구체적인 값)을 전달할 수 있다.
+ // 아래의 코드는 에러가 발생한다.
+ // let coordinates = (10, 20, 30)
+ // let centerY = 20
+ // switch coordinates {
+ //   | (x, centerY, _) => Js.log(x)
+ // }
+ // coordinates의 두 번째 값과 centerY의 값이 동일해 옳은 로직이라고 생각할 수 있으나,
+ // coordinates의 두 번째 값이 centerY에 할당되는 것으로 해석하기 때문에 옳은 방식으로 볼 수 없다.
+
+
+/* Exhaustiveness Check
+ * Rescript는 가장 중요한 패턴 매칭 기능인 '누락된 패턴 컴파일 타임 검사(compile-time check of missing patterns)' 기능도 제공한다.
+ * 위의 예시를 다시 한 번 살펴보자.
+ */
+ let message = switch person1 {
+   | Teacher({name: "Mary" | "Joe"}) =>
+      `Hey, still going to the party on Saturday?` 
+   | Student({name, reportCard: {passing: true, gpa}}) =>
+      `Congrats ${name}, nice GPA of ${Js.Float.toString(gpa)} you got there!`
+   | Student({
+       reportCard: {gpa: 0.0},
+       status: Vacations(daysLeft) | Sabbatical(daysLeft)
+     }) =>
+      `Come back in ${Js.Int.toString(daysLeft)} days!`
+   | Student({status: Sick}) =>
+      `How are you feeling?`
+   | Student({name}) =>
+      `Good luck next semester ${name}!`
+ }
+ // 이전 예시와 다르게 Teacher({name})이 "Mary" 또는 "Joe"가 아닌 조건에 대한 처리를 제거했다.
+ // 모든 시나리오를 처리하지 못하는 것은 대부분의 프로그램 버그를 발생하는 원인이 되며, 이는 다른 사람이 작성한 코드를 리팩토링할 때 자주 발생된다.
+ // 다행히 Rescript의 경우 컴파일러에서 다음과 같이 알려준다.
+ /*
+      Warning 8: this pattern-matching is not exhaustive.
+      Here is an example of a value that is not matched:
+      Some({name: ""})
+ */
+ // Rescript의 완전성 검사를 통해 코드를 실행하기 전에 중요한 버그의 전체 범주를 지울 수 있다.
+ // 다음은 대부분의 nullable 값이 처리되는 방식이다.
+ let myNullableValue = Some(5)
+ switch myNullableValue {
+    | Some(v) => Js.log("value is present")
+    | None => Js.log("value is absent")
+ }
+ // None 케이스를 처리하지 않으면 컴파일러가 경고한다.
+ // 이로써 더이상 코드에 undefined 버그는 발생하지 않는다.
+
+
+/* Conclusion & Tips & Tricks
+ * 간결한 구조화 구문, switch의 적절한 조건 처리, 정적 완전성 검사를 통해
+ * 패턴 매칭이 올바른 코드를 작성하기 위한 게임 체인저가 되는 방법을 습득하기 바란다.
+ * 추가로 몇 가지 집어보자면,
+      - 와일드 카드(_)를 남용하지 않도록 하자. 컴파일러가 더 나은 완정성 검사를 하지 못하도록 막는다.
+        Variant에 새 케이스를 추가하는 리팩토링 후에 특히 중요하다. 다양한 타입들을 허용하는 경우에만 사용하도록 하자.
+      - when 절을 아껴서 사용하고, 가능하면 최대한 패턴 매칭을 단조롭게 만들자.
+        이것이 버그를 줄이는 최고의 방법이다.
+   아래는 worst 코드부터 best 코드까지 나열한 것이다.
+ */
+ let optionBoolToBool = opt => {
+    if opt == None {
+       false
+    } else if opt === Some(true) {
+       true
+    } else {
+       false
+    }
+ }
+ // 이건 조금 이상하다. 패턴 매칭을 적용해보자.
+ let optionBoolToBool = opt => {
+    switch opt {
+       | None => false
+       | Some(a) => a? true : false
+    }
+ }
+ // 약간 나아졌으나 여전히 중첩되어있다.
+ let optionBoolToBool = opt => {
+    switch opt {
+       | None => false
+       | Some(true) => true
+       | Some(false) => false
+    }
+ }
+ // 훨씬 선형적으로 보인다! 여기서 아래처럼 시도할 수 있다.
+ let optionBoolToBool = opt =>{
+    switch opt {
+       | Some(true) => true
+       | _ => false
+    }
+ }
+ // 훨씬 간결하지만 앞서 말했던 완전성 검사를 사용할 수 없다. 아래의 코드가 최선의 방법이다.
+ let optionBoolToBool = opt => {
+    switch opt {
+       | Some(trueOrFalse) => trueOrFalse
+       | None => false
+    }
+ }
+ // 분기가 많은 if-else를 사용하는 것 대신에 패턴 매칭 사용을 권장한다. 더 간결하고 성능도 뛰어나다.
