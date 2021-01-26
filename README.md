@@ -19,3 +19,4 @@ Rescript study with Rescript offical document 📑
 > 15. [Mutation](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/15_Mutation/mutation.res)
 > 16. JSX
 > 17. [Exception](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/17_Exception/exception.res)
+> 18. [Lazy Value](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/18_Lazy_Value/lazyValue.res)
