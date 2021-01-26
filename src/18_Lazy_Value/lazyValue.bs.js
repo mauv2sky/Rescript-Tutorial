@@ -40,10 +40,10 @@ var lazyDoesFileExist = {
 
 var computation = {
   LAZY_DONE: true,
-  VAL: undefined
+  VAL: 1
 };
 
-CamlinternalLazy.force(computation);
+console.log(CamlinternalLazy.force(computation));
 
 var computation$1 = {
   LAZY_DONE: true,

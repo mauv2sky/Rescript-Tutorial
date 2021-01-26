@@ -39,8 +39,8 @@
  * 값을 반환하려면 lazy value를 명시적으로 실행해야 한다.
  * lazy.force를 사용하면 값의 반환을 보장할 수 있다.
  */
- let computation = lazy()
- Lazy.force(computation)
+ let computation = lazy(1)
+ Lazy.force(computation)->Js.log
  // 패턴 매칭을 사용하여 lazy value를 계산하도록 강제할 수도 있다.
  // switch 절 및 tuple destructuring과 같은 유사한 구문이 포함된다.
  let computation = lazy("computed")
