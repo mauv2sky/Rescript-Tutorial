@@ -1,5 +1,5 @@
 # Rescript-Tutorial
-Rescript study with Rescript offical document 📑
+Rescript study with Rescript official document 📑
 </br></br>
 > 0. [Try](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/0_Try/fibonacci.res)
 > 1. [Let Binding](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/1_LetBinding/example.res)
