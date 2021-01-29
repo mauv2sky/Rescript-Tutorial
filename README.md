@@ -20,3 +20,5 @@ Rescript study with Rescript official document 📑
 > 16. JSX
 > 17. [Exception](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/17_Exception/exception.res)
 > 18. [Lazy Value](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/18_Lazy_Value/lazyValue.res)
+> 19. Async & Promise
+> 20. [Module](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/20_Module/module.res)
