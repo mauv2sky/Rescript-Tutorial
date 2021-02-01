@@ -3,8 +3,7 @@
 /* Import a Module/File
  * JavaScript와 다르게, Rescript에서는 import 구문을 작성하지 않아도 된다.
  */
- let person: Student.school = Student.Student
- let studentMessage = Student.message(person)
+ let schoolMessage = School.message
  // 위 코드는 Student.res 파일의 message를 참조한다.
  // 모든 Rescript 파일은 모듈이기 때문에, 다른 파일의 내용에 접근하는 것과 다른 모듈의 내용에 접근하는 것은 같은 의미를 갖는다.
  // 그러므로 ReScript 프로젝트 파일의 이름은 고유해야 한다.
