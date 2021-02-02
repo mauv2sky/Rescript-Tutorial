@@ -17,7 +17,7 @@ Rescript study with Rescript official document 📑
 > 13. [Pipe](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/13_Pipe/pipe.res)
 > 14. [Pattern Matching/ Destructuring](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/14_PatternMatching_Destructuring/patternMatching_destructuring.res)
 > 15. [Mutation](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/15_Mutation/mutation.res)
-> 16. JSX
+> 16. [JSX](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/16_JSX/jsx.res)
 > 17. [Exception](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/17_Exception/exception.res)
 > 18. [Lazy Value](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/18_Lazy_Value/lazyValue.res)
 > 19. [Async & Promise](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/19_Async%26Promise/async_n_Promise.res) - incomplete
