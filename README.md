@@ -12,7 +12,7 @@ Rescript study with Rescript official document 📑
 > 08. [Polymorphic Variant](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/8_Polymorphic_Variant/polymorphic_variant.res)
 > 09. [Null, Undefined and Option](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/9_Null_Undefined_Option/null_undefined.res)
 > 10. [Array & List](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/10_Array_and_List/array_and_list.res)
-> 11. [Function](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/11_Function/function.res) - incomplete
+> 11. [Function](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/11_Function/function.res)
 > 12. [Control Flow](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/12_Control_Flow/control_flow.res)
 > 13. [Pipe](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/13_Pipe/pipe.res)
 > 14. [Pattern Matching/ Destructuring](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/14_PatternMatching_Destructuring/patternMatching_destructuring.res)
@@ -20,7 +20,7 @@ Rescript study with Rescript official document 📑
 > 16. [JSX](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/16_JSX/jsx.res)
 > 17. [Exception](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/17_Exception/exception.res)
 > 18. [Lazy Value](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/18_Lazy_Value/lazyValue.res)
-> 19. [Async & Promise](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/19_Async%26Promise/async_n_Promise.res) - incomplete
+> 19. [Async & Promise](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/19_Async%26Promise/async_n_Promise.res)
 > 20. [Module](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/20_Module/module.res)
 > 21. [Import & Export](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/21_Import_Export/import_export.res)
 > 22. [Attribute(Decorator)](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/22_Attribute/attribute_decorator.res)
