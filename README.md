@@ -1,6 +1,7 @@
 # Rescript-Tutorial
 Rescript study with Rescript official document 📑
 </br></br>
+#### LANGUAGE FEATURES
 > 00. [Try](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/0_Try/fibonacci.res)
 > 01. [Let Binding](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/1_LetBinding/example.res)
 > 02. [Type](https://github.com/mauv2sky/Rescript-Tutorial/blob/main/src/2_Type/summary.res)
