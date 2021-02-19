@@ -1,9 +1,9 @@
 /* Control flow
- * Rescript는 if-else, 삼항 연산자, for 그리고 while을 제공한다.
+ * 리스크립트는 if-else, 삼항 연산자, for 그리고 while을 제공한다.
  */
 
 /* If-Else 및 삼항
- * JavaScript와 달리 Rescript의 if는 표현식으로 if 내부의 내용을 평가한다.
+ * 자바스크립트와 달리 리스크립트의 if는 표현식으로 if 내부의 내용을 평가한다.
  */
  let isMorning = true
  let message = if isMorning {
@@ -27,8 +27,8 @@
  // 다음과 같이 작성하면 에러가 발생한다.
  // if result = if showMenu{ 1 + 2 }
  // 기본적으로 else 분기에는 암시적 unit 타입이 있고, if 분기에는 int 타입이 있다는 타입 에러가 발생한다.
- // Rescript는 삼항 연산을 제공하지만 가능하면 if-else 조건문을 사용하는 것이 좋다.
- // Rescript에는 패턴매칭으로 인해 조건이 필요한 코드의 모든 카테고리를 제거하므로 if-else와 삼항 연산이 다른 언어보다 적게 사용된다.
+ // 리스크립트는 삼항 연산을 제공하지만 가능하면 if-else 조건문을 사용하는 것이 좋다.
+ // 리스크립트는 패턴매칭을 통해 조건이 필요한 코드의 모든 카테고리를 제거하므로, if-else와 삼항 연산이 다른 언어보다 적게 사용된다.
 
 
 /* For Loops
@@ -54,8 +54,8 @@
      Js.log(num)
      num := num.contents + 1
  }
- // Rescript에는 루프 탈출 키워드인 break가 존재하지 않는다.
- // 하지만 Rescript에서 제공하는 mutable binding을 사용함으로써 루프를 탈출할 수 있다.
+ // 리스크립트에는 루프 탈출 키워드인 break가 존재하지 않는다.
+ // 하지만 리스크립트에서 제공하는 mutable binding을 사용함으로써 루프를 탈출할 수 있다.
  let break = ref(false)
 
  while !break.contents {
