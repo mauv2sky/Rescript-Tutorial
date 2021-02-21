@@ -1,5 +1,5 @@
 /* Pattern Matching /Destructuring
- * Pattern Matching은 Rescript의 가장 큰 특징 중 하나이다.
+ * 패턴매칭은 리스크립트의 가장 큰 특징 중 하나이다.
  * 다음 3가지 뛰어난 기능을 하나로 결합한다.
     - 비구조화(Destructuring) : 구조화된 배열 또는 객체를 개별적인 변수에 할당
     - 데이터의 형태를 기반으로 하는 switch
@@ -9,7 +9,7 @@
 
 
 /* Destructuring
- * JavaScript조차도 우리가 원하는 부분을 추출하고 변수 이름을 할당하기 위해
+ * 자바스크립트조차도 우리가 원하는 부분을 추출하고 변수 이름을 할당하기 위해
  * 자료구조를 '개방'하는 비구조화 기능이 존재한다.
  */
  let coordinates = (10, 20, 30)
