@@ -52,18 +52,17 @@
 
 
 /* 데이터 형태에 따른 switch문(Switch Based on Shape of Data)
- * 패턴 매칭의 비구조화 기능은 좋지만, 코드 구조화에 대해 생각하는 방식을 실제로 변경하지 않는다.
- * 코드에 대해 생각하는 패러다임을 바꾸는 하나의 방법은 데이터의 형태에 따라 코드를 실행하는 것이다.
- * Variant를 생각해보자.
+ * 패턴 매칭은 구조분해가 되는 장점을 지니면서도 작성자가 의도하는 코드의 구조에는 영향을 주지 않는다.
+ * 코드에 대해 생각하는 패러다임을 바꾸는 하나의 방법은 데이터의 형태에 따라 다른 코드를 실행하는 것이다.
+ * 배리언트를 생각해보자.
  */
  type payload =
     | BadResult(int)
     | GoodResult(string)
     | NoResult
- // 값이 GoodResult(...)인 경우 성공 메시지를 출력하고, 값이 NoResult일 때는 다르게 작동하는 등
- // 세 가지 케이스를 각각 다르게 처리하고 싶다.
- // 이런 경우, 다른 언어에서는 읽기 어렵고 오류가 발생하기 쉬운 일련의 if-else로 끝이 난다.
- // Rescript에서는 강력한 switch 패턴 매칭 기능을 사용하여 개별화된 인자에 따라 올바른 코드를 호출하면서 값을 디스트럭처링할 수 있다.
+ // 위의 세 가지 케이스를 각각 다르게 처리하고 싶다고 가정해보자.
+ // 이런 상황에 다른 언어에서는 일련의 if-else를 연거푸 작성하곤 하는데, 이는 읽기가 어렵고 오류가 발생하기 쉽다.
+ // 리스크립트에서는 강력한 switch 패턴매칭을 사용하여 구조분해를 하고, 각각 분해된 결과의 오른편에 작성된 코드가 실행되도록 한다.
  let data = GoodResult("Product shipped!")
  switch data {
      | GoodResult(theMessage) =>
@@ -73,7 +72,7 @@
      | NoResult =>
         Js.log("Bah.")
  }
- // 정확한 값의 형태를 기반으로, 깔끔하고 컴파일러에 검증된 코드의 선형 목록으로 표현할 수 있다.
+ // 정확한 값의 형태를 기반으로 실행 가능한 깔끔하고 컴파일러가 검증한 선형적인 코드로 표현할 수 있다.
  // 아래는 다른 언어로 코딩할 때 머리가 좀 아파질 실제 시나리오이다.
  type status = Vacations(int) | Sabbatical(int) | Sick | Present
  type reportCard = {passing: bool, gpa: float}
@@ -88,9 +87,9 @@
         reportCard: reportCard
     })
  // 이 시나리오에 대한 요구사항이다.
- //     - Mary나 Joe의 이름을 가진 교사는 비공식적으로 인사한다.
+ //     - Mary나 Joe의 이름을 가진 교사는 사적으로 인사한다.
  //     - 다른 교사는 공식적으로 인사한다.
- //     - 학생인 경우, 학기를 통과하면 축하해준다.
+ //     - 학생인 경우 학기를 통과하면 축하해준다.
  //     - 만약 학생의 평균 평점이 0이고 휴가중이거나 안식일이면 다른 메시지를 표시한다.
  //     - 모든 학생을 위한 메시지를 표시한다.
  // Rescript를 사용하면 쉽게 코딩할 수 있다.
@@ -132,6 +131,7 @@
  //         true             1       2       3
  //         false            4       4       5
  
+ // 폴-스루(Fall-Through) 패턴
  // 이전 person 예제에서 보여준 중첩 패턴 검사는 switch의 최상위 수준에서도 작동한다.
  let myStatus = Vacations(10)
  switch myStatus {
@@ -140,7 +140,7 @@
  | Sick
  | Present => Js.log("Hey! How are you?")
  }
- // 여러 케이스가 같은 방식으로 처리된다면 논리의 특정 타입으로 정리할 수 있다.
+ // 여러 케이스가 같은 방식으로 처리를 해야 하면 특정 타입으로 로직을 정리할 수 있다.
  
  // Teacher(payload)와 같은 값이 있는데 Teacher 부분에서 패턴 일치만 하고 payload는 무시하려는 경우에는
  // 다음과 같이 _ 와일드 카드를 사용할 수 있다.
@@ -154,17 +154,18 @@
     | _ => Js.log("Ok.")
  }
  // 하지만 최상위 수준의 catch-all 조건을 남용하면 안된다.
- // 대신 모든 경우를 작성하는 것을 권장한다.
+ // 가급적 모든 경우의 수를 작성하는 것을 권장한다.
  switch myStatus {
     | Vacations(_) => Js.log("Have fun!")
     | Sabbatical(_) | Sick | Present => Js.log("Ok.")
  }
  // 일일이 작성하는 것이 번거로울 수 있지만 이는 한 번만 하면 끝나는 작업이다.
- // 만약 Quarantined라는 Variant를 status 타입에 추가하거나, 패턴이 일치하는 위치를 변경해야 할 때 도움이 된다.
+ // 만약 Quarantined라는 배리언트를 status 타입에 추가하거나, 패턴이 일치하는 위치를 변경해야 할 때 도움이 된다.
  // 최상위 수준의 와일드 카드는 잠재적으로 버그를 일으킬 수 있기 때문에 주의해야 한다.
-
+ 
+ // When절
  // 때때로 값의 형태보다 더 많은 조건을 확인하거나 임의의 검사를 실행하고 싶은 경우가 있다.
- // 그럴 때 다음과 같이 작성하고 싶을 것이다.
+ // 그럴 때 다음과 같이 작성하고 싶을 수 있다.
  switch person1 {
     | Teacher(_) => ()
     | Student({reportCard: {gpa}}) =>
@@ -184,6 +185,7 @@
       Js.log("Heyo")
  }
 
+ // 예외 매칭
  // 함수에서 예외가 발생하면, 함수의 일반적으로 반환되는 값에 추가하여 해당 예외도 일치시킬 수 있다.
  let myItems = list{1, 2, 3}
  let theItem = 1
@@ -203,7 +205,7 @@
  }
 
  // 리스트 매칭
- // List의 패턴매칭은 Array와 유사하나 List의 꼬리를 추출하는 추가 기능이 있다. (첫 번째 요소를 제외한 모든 요소)
+ // 리스트 패턴매칭은 배열과 유사하나 리스트의 꼬리를 추출하는 추가 기능이 있다. (첫 번째 요소를 제외한 모든 요소)
  let rec printStudents = (students) => {
     switch students {
        | list{} => ()
@@ -215,7 +217,7 @@
  }
  printStudents(list{"Jane", "Harvey", "Patrick"})
 
- // 주의할 점: let-binding 이름이나 기타 항목이 아닌 패턴으로만 리터럴(ex. 구체적인 값)을 전달할 수 있다.
+ // 주의할 점: let-binding한 이름이나 기타 항목이 아닌 패턴으로만 리터럴(ex. 구체적인 값)을 전달할 수 있다.
  // 아래의 코드는 에러가 발생한다.
  // let coordinates = (10, 20, 30)
  // let centerY = 20
@@ -226,8 +228,8 @@
  // coordinates의 두 번째 값이 centerY에 할당되는 것으로 해석하기 때문에 옳은 방식으로 볼 수 없다.
 
 
-/* Exhaustiveness Check
- * Rescript는 가장 중요한 패턴 매칭 기능인 '누락된 패턴 컴파일 타임 검사(compile-time check of missing patterns)' 기능도 제공한다.
+/* 완전성 검사(Exhaustiveness Check)
+ * 리스크립트는 가장 중요한 패턴 매칭 기능인 '누락된 패턴을 컴파일 시점 검사(compile-time check of missing patterns)' 하는 기능도 제공한다.
  * 위의 예시를 다시 한 번 살펴보자.
  */
  let message = switch person1 {
@@ -245,15 +247,15 @@
    | Student({name}) =>
       `Good luck next semester ${name}!`
  }
- // 이전 예시와 다르게 Teacher({name})이 "Mary" 또는 "Joe"가 아닌 조건에 대한 처리를 제거했다.
+ // 이전 예시와 다르게 Teacher({name})이 "Mary" 또는 "Joe"가 아닌 조건에 대한 처리하는 부분을 제거했다.
  // 모든 시나리오를 처리하지 못하는 것은 대부분의 프로그램 버그를 발생하는 원인이 되며, 이는 다른 사람이 작성한 코드를 리팩토링할 때 자주 발생된다.
- // 다행히 Rescript의 경우 컴파일러에서 다음과 같이 알려준다.
+ // 다행히 리스크립트의 경우 컴파일러에서 다음과 같이 알려준다.
  /*
       Warning 8: this pattern-matching is not exhaustive.
       Here is an example of a value that is not matched:
       Some({name: ""})
  */
- // Rescript의 완전성 검사를 통해 코드를 실행하기 전에 중요한 버그의 전체 범주를 지울 수 있다.
+ // 리스크립트의 완전성 검사를 통해 코드를 실행하기 전에 중요한 버그의 전체 범주를 지울 수 있다.
  // 다음은 대부분의 nullable 값이 처리되는 방식이다.
  let myNullableValue = Some(5)
  switch myNullableValue {
@@ -264,15 +266,15 @@
  // 이로써 더이상 코드에 undefined 버그는 발생하지 않는다.
 
 
-/* Conclusion & Tips & Tricks
- * 간결한 구조화 구문, switch의 적절한 조건 처리, 정적 완전성 검사를 통해
- * 패턴 매칭이 올바른 코드를 작성하기 위한 게임 체인저가 되는 방법을 습득하기 바란다.
+/* 결론 및 팁
+ * 간결한 구조분해 구문, switch의 적절한 조건 처리, 정적 완전성 검사를 통해
+ * 패턴 매칭이 올바른 코드를 작성하기 위한 획기적인 방법임을 습득하기 바란다.
  * 추가로 몇 가지 집어보자면,
       - 와일드 카드(_)를 남용하지 않도록 하자. 컴파일러가 더 나은 완정성 검사를 하지 못하도록 막는다.
-        Variant에 새 케이스를 추가하는 리팩토링 후에 특히 중요하다. 다양한 타입들을 허용하는 경우에만 사용하도록 하자.
+        배리언트에 새 케이스를 추가하는 리팩토링을 할 때 특히 중요하다. 다양한 타입들을 허용하는 경우에만 사용하도록 하자.
       - when 절을 아껴서 사용하고, 가능하면 최대한 패턴 매칭을 단조롭게 만들자.
         이것이 버그를 줄이는 최고의 방법이다.
-   아래는 worst 코드부터 best 코드까지 나열한 것이다.
+   아래는 가장 나쁜 코드부터 최고의 코드까지 나열한 것이다.
  */
  let optionBoolToBool = opt => {
     if opt == None {
@@ -283,7 +285,7 @@
        false
     }
  }
- // 이건 조금 이상하다. 패턴 매칭을 적용해보자.
+ // 위 코드조각 대신 우리는 이제 패턴매칭을 사용할 수 있다.
  let optionBoolToBool = opt => {
     switch opt {
        | None => false
@@ -312,4 +314,4 @@
        | None => false
     }
  }
- // 분기가 많은 if-else를 사용하는 것 대신에 패턴 매칭 사용을 권장한다. 더 간결하고 성능도 뛰어나다.
+ // 분기가 많은 if-else 구문 대신에 패턴매칭 사용을 권장한다. 더 간결하고 성능도 뛰어나다.
