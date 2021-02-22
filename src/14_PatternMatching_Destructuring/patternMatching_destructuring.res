@@ -1,22 +1,21 @@
 /* Pattern Matching /Destructuring
- * 패턴매칭은 리스크립트의 가장 큰 특징 중 하나이다.
- * 다음 3가지 뛰어난 기능을 하나로 결합한다.
-    - 비구조화(Destructuring) : 구조화된 배열 또는 객체를 개별적인 변수에 할당
-    - 데이터의 형태를 기반으로 하는 switch
+ * 패턴매칭은 리스크립트의 가장 큰 특징 중 하나로, 다음 세가지의 뛰어난 기능을 하나로 결합한다.
+    - 구조분해 : 구조화된 배열 또는 객체를 개별적인 변수에 할당
+    - 데이터의 형태를 기반으로 하는 switch문
     - 완전성 검사
  * 각 기능을 아래에서 자세히 다루어본다.
  */
 
 
-/* Destructuring
+/* 구조분해(Destructuring)
  * 자바스크립트조차도 우리가 원하는 부분을 추출하고 변수 이름을 할당하기 위해
- * 자료구조를 '개방'하는 비구조화 기능이 존재한다.
+ * 자료구조를 '개방'하는 구조분해 기능이 존재한다.
  */
  let coordinates = (10, 20, 30)
  let (x, _, _) = coordinates
  Js.log(x)
 
- // 비구조화는 기본으로 제공되는 대부분의 자료구조에서 작동된다.
+ // 구조분해는 기본으로 제공되는 대부분의 자료구조에서 작동한다.
  // Record
  type student = {name: string, age: int}
  let student1 = {name: "John", age: 10}
@@ -27,19 +26,19 @@
  let myResult = Success("You did it!")
  let Success(message) = myResult     // "You did it!"이 'message'에 할당된다.
 
- // 일반적으로 바인딩을 배치하는 모든 곳에서 비구조화를 사용할 수 있다.
+ // 일반적으로 바인딩을 배치하는 모든 곳에서 구조분해를 사용할 수 있다.
  type result1 =
     | Complete(string)
  let displayMessage = (Complete(m)) => {
-     // 매개변수를 비구조화하여 성공 메시지 문자열을 직접적으로 추출할 수 있다.
+     // 매개변수를 구조분해하여 성공 메시지 문자열을 직접적으로 추출할 수 있다.
      Js.log(m)
  }
  displayMessage(Complete("You did it!"))
 
- // Record에서는 비구조화하는 동안 이름을 변경할 수 있다.
+ // 레코드는 구조분해 시에 이름을 변경할 수 있다.
  let {name: n} = student1   // "John"이 'n'에 할당된다.
 
- // 이론적으로 최상위 레벨에서도 배열과 리스트를 비구조화 시킬 수 있다.
+ // 이론적으로 최상위 레벨에서도 배열과 리스트를 구조분해 시킬 수 있다.
  let myArray = [1, 2, 3]
  let [item1, item2, _] = myArray
  // 1은 'item1', 2는 'item2'로 할당되고 3번째 항목은 무시된다.
@@ -47,11 +46,12 @@
  // let list{head, ...tail} = myList
  // (위의 코드는 최상위 수준 바인딩 에러 발생 : https://github.com/rescript-lang/rescript-compiler/issues/4912)
  // 1은 'head', 'list{2, 3}'은 'tail'에 할당된다.
- // 하지만 배열 예제는 권장하지 않으며 리스트 예제는 에러를 발생할 것이다.
- // 이는 안정성을 위해서 존재한다. 아래에서 볼 수 있듯이 switch를 통해 destructuring array 및 list를 올바르게 사용할 수 있다.
+ // 하지만 위의 배열 예제는 강하게 권장하지 않으며 리스트 예제는 에러를 발생할 것이다.
+ // 단지 이런 것도 가능하다는 것을 보여주기 위한 예시로 가급적 튜플을 사용하는 것을 권장한다.
+ // 다음 내용에서 볼 수 있듯이 switch를 사용하여 배열과 리스트를 올바르게 구조분해할 수 있다.
 
 
-/* Switch Based on Shape of Data
+/* 데이터 형태에 따른 switch문(Switch Based on Shape of Data)
  * 패턴 매칭의 비구조화 기능은 좋지만, 코드 구조화에 대해 생각하는 방식을 실제로 변경하지 않는다.
  * 코드에 대해 생각하는 패러다임을 바꾸는 하나의 방법은 데이터의 형태에 따라 코드를 실행하는 것이다.
  * Variant를 생각해보자.
