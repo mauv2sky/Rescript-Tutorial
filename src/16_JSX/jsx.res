@@ -1,11 +1,11 @@
 /* JSX 
- * Rescript에서 HTML 구문을 사용하고 싶다면 이 섹션을 보도록 하자.
- * Rescript는 JSX 구문을 지원하지만 ReactJS의 구문과 약간의 차이가 있다.
- * Rescript의 JSX는 ReactJS와 관련이 없으며 일반 함수 호출로 변형된다.
+ * 리스크립트에서 HTML 구문을 사용하고 싶다면 이 섹션을 보도록 하자.
+ * 리스크립트는 JSX 구문을 지원하지만 ReactJS의 구문과 약간의 차이가 있다.
+ * 리스크립트의 JSX는 ReactJS와 관련이 없으며 일반 함수 호출로 변형된다.
  * ReasonReact 독자를 위한 참고 사항 : ReasonReact가 JSX를 변화시키는 것은 아니다. 자세한 내용은 아래 사용법을 참고하자.
  */
 
-/* Capitalized Tag : 대문자 태그
+/* 대문자 태그(Capitalized Tag)
     // 기존 방식
     <MyComponent name={"ReScript"} />
     // Rescript JSX
@@ -13,7 +13,7 @@
  */
 
 
-/* Uncapitalized Tag : 소문자 태그
+/* 소문자 태그(Uncapitalized Tag)
     // 기존 방식
     <div onClick={handler}> child1 child2 </div>
     // Rescript JSX
@@ -100,5 +100,5 @@
  * ReactJS는 일부 특수한 런타임 로직과 특수 구문 변환 그리고 가변 인수 감지 마킹을 사용해 이런 경우를 대부분 방지한다.
  * 이런 동적 사용은 타입 시스템 감지를 조금 복잡하게 만든다.
  * ReasonReact의 모든 구문을 컨트롤하기 때문에 컴파일 시간 및 런타임 비용없이 래핑하거나 래핑하지 않는 경우를 명확히 구분하기 위해
- * Rescript에서는 children spread를 사용하기로 결정했다.
+ * 리스크립트에서는 children spread를 사용하기로 결정했다.
  */
