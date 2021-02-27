@@ -1,6 +1,5 @@
 /* Exception
- * Exception은 단지 예외적인 경우에 사용되는 variant의 특별한 종류이다.
- * 이를 남용해서는 안된다.
+ * 익셉션(예외)은 이례적인 경우에 사용되는 특별한 종류의 배리언트로, 이를 남용해서는 안된다.
  */
 
 
@@ -21,21 +20,21 @@
    }
  // raise(Not_found)를 발생하면 Not_found에 맞는 예외처리를 하게된다.
  // getItem에서 직접 option<int>를 반환하고 try를 완전히 피할 수도 있다.
- // 함수에서 다른 반환값을 가져오는 동안 exception에서 직접 예외처리를 할 수 있다.
+ // 함수에서 다른 반환값을 가져오는 동안 익셉션을 통해 직접 예외처리를 할 수 있다.
  let theItem = 1
  let myItems = list{1, 2, 3}
  switch List.find(i => i === theItem, myItems) {
  | item => Js.log(item)
  | exception Not_found => Js.log("No such item found!")
  }
- // Variant를 만드는 것처럼 자체 exception을 만들 수도 있다. (대문자로 표기해야한다)
+ // 배리언트를 만드는 것처럼 자체 익셉션을 만들 수도 있다. (대문자로 표기해야한다)
  exception InputClosed(string)
  raise(InputClosed("The stream has closed!"))
 
 
 /* Catching JS Exceptions
- * JavaScript의 예외와 Rescript의 예외를 구별하기 위해
- * Rescript는 Js.Exn.Error(payload) variant 아래에 JS 예외를 네임스페이스로 지정한다.
+ * 자바스크립트의 익셉션과 리스크립트의 익셉션을 구별하기 위해
+ * 리스크립트는 Js.Exn.Error(payload) 배리언트를 JS 예외용 네임스페이스로 지정한다.
  * 아래와 같은 방식으로 작성함으로써 JS단에서 발생하는 예외를 처리할 수 있다.
  */
  try {
