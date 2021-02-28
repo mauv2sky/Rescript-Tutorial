@@ -32,7 +32,7 @@
  raise(InputClosed("The stream has closed!"))
 
 
-/* Catching JS Exceptions
+/* JS 예외받기(Catching JS Exceptions)
  * 자바스크립트의 익셉션과 리스크립트의 익셉션을 구별하기 위해
  * 리스크립트는 Js.Exn.Error(payload) 배리언트를 JS 예외용 네임스페이스로 지정한다.
  * 아래와 같은 방식으로 작성함으로써 JS단에서 발생하는 예외를 처리할 수 있다.
@@ -50,9 +50,9 @@
  // obj를 조작하려면 표준 라이브러리의 Js.Exn 모듈 helper를 사용하여 위의 코드처럼 작성하면 된다.
  
 
-/* Raise a JS Exception
- * raise(MyException)은 Rescript 예외를 발생시킨다.
- * JavaScript 예외를 발생 시키려면 Js.Exn.raiseError를 사용하면 된다.
+/* JS 예외를 발생하기(Raise a JS Exception)
+ * raise(MyException)는 리스크립트 예외를 발생시킨다.
+ * 자바스크립트 예외를 발생 시키려면 Js.Exn.raiseError를 사용하면 된다.
  */
  let myTest = () => {
      Js.Exn.raiseError("Hello!")
@@ -67,11 +67,10 @@
  `)
 
 
-/* Catch ReScript Exceptions from JS
- * 이전 섹션은 생각보다 유용하지 않다. 
- * JS코드가 예외를 발생시키는 Rescript 코드와 함께 작동하도록 하기위해
- * 이제부터는 Rescript에서 실제로 JS예외를 발생시킬 필요가 없다.
- * Rescript 예외는 JS코드에서 사용할 수 있다.
+/* JS에서 리스크립트 예외받기(Catch ReScript Exceptions from JS)
+ * 이전 섹션(JS 예외 발생하기)은 생각보다 유용하지 않다. 
+ * JS코드가 예외를 발생시키는 리스크립트 코드와 함께 작동하도록 하기위해 리스크립트에서 실제로 JS예외를 발생시킬 필요가 없다.
+ * 리스크립트 예외는 JS코드에서 그대로 사용할 수 있다.
  */
  exception BadArgument({myMessage: string})
  let myTest = () => {
@@ -86,17 +85,17 @@
         console.log(e.Error.stack)
     }
  `)
- // 위의 BadArgument 예외는 인라인 record 타입을 사용한다.
+ // 위의 BadArgument 예외는 인라인 레코드 타입을 사용한다.
  // 우수한 구조 설계를 위해 예외를 {RE_EXN_ID, myMessage, Error}로 컴파일한다. (JS 컴파일 결과를 확인하자)
  // 예외가 위의 예외 대신 일반 위치 인수를 취했다면,
  // 단일 인수를 취하는 표준 라이브러리의 Invalid_argument("Oops!")처럼 인수는 대신 필드 _1로 JS로 컴파일된다.
- // 두 번째 위치 인수는 _2 등으로 컴파일된다. --- 이해 필요
+ // 두 번째 위치 인수는 _2로, 인수위치에 따라 _N으로 컴파일된다.
 
 
 /* Tips & Tricks
- * 일반적인 variant가 있으면 예외가 필요하지 않은 경우가 있다.
- * 컬렉션에서 item을 찾을 수 없을 때, option<item>(not found의 뜻)을 대신 반환해보자.
- * 같은 catch절에서 Rescript와 JS 예외를 모두 처리할 수 있다.
+ * 일반적인 배리언트를 사용하면 예외가 필요하지 않은 경우가 많다.
+ * 컬렉션에서 item을 찾을 수 없을 때 예외 대신 option<item>(not found의 뜻)을 반환해보자.
+ * 같은 catch절에서 리스크립트와 JS 예외를 모두 처리할 수 있다.
  */
  try {
    ()
