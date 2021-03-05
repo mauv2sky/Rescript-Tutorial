@@ -8,7 +8,7 @@
 
 
 /* Promise
- * Rescript는 JavaScript promises를 기본적으로 지원한다.
+ * 리스크립트는 JavaScript promises를 기본적으로 지원한다.
  * 일반적으로 필요한 3가지 기능은 다음과 같다.
      - Js.Promise.resolve: 'a => Js.Promise.t('a)
      - Js.Promise.then_: ('a => Js.Promise.t('b),
