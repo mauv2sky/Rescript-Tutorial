@@ -8,14 +8,14 @@
 
 
 /* Promise
- * 리스크립트는 JavaScript promises를 기본적으로 지원한다.
+ * 리스크립트는 자바스크립트 promises를 기본적으로 지원한다.
  * 일반적으로 필요한 3가지 기능은 다음과 같다.
      - Js.Promise.resolve: 'a => Js.Promise.t('a)
      - Js.Promise.then_: ('a => Js.Promise.t('b),
          Js.Promise.t('a)) => Js.Promise.t('b)
      - Js.Promise.catch: (Js.Promise.error => Js.Promise.t('a),
          Js.Promise.t('a)) => Js.Promise.t('a)
- * 다음은 Rescript측에서 promise를 생성하기 위한 타입 서명이다.
+ * 다음은 리스크립트측에서 promise를 생성하기 위한 타입 서명이다.
  */
  Js.Promise.make :(
     (
