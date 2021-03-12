@@ -1,12 +1,12 @@
 /* Import & Export */
 
 /* Import a Module/File
- * JavaScript와 다르게, Rescript에서는 import 구문을 작성하지 않아도 된다.
+ * 자바스크립트와는 다르게, 리스크립트에서는 import 구문을 작성하지 않아도 된다.
  */
  let schoolMessage = School.message
  // 위 코드는 Student.res 파일의 message를 참조한다.
- // 모든 Rescript 파일은 모듈이기 때문에, 다른 파일의 내용에 접근하는 것과 다른 모듈의 내용에 접근하는 것은 같은 의미를 갖는다.
- // 그러므로 ReScript 프로젝트 파일의 이름은 고유해야 한다.
+ // 모든 리스크립트 파일은 모듈이기 때문에, 다른 파일의 내용에 접근하는 것과 다른 모듈의 내용에 접근하는 것은 같은 의미를 갖는다.
+ // 그러므로 리스크립트 프로젝트 파일의 이름은 고유해야 한다.
 
 
 /* Export Stuff
@@ -17,5 +17,5 @@
 
 
 /* Work with JavaScript Import & Export
- * JS 모듈을 import/ export 하는 방법은 JavaScript Interop 섹션의 Import from/ Export to JS를 참조하자.
+ * JS 모듈을 import/ export 하는 방법은 자바스크립트 Interop 섹션의 Import from/ Export to JS를 참조하자.
  */
